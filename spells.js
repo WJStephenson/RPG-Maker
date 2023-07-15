@@ -1,6 +1,8 @@
 
 import { classSelect } from "./main.js";
 
+const infoIcon = `<i class="fa-solid fa-scroll"></i>`;
+
 export function getSpells(level, className) {
     fetch(`https://www.dnd5eapi.co/api/classes/${className}/levels/${level}`)
         .then(response => response.json())
@@ -21,32 +23,38 @@ async function getSpellList(className, spellLevelArr) {
         const spellListContainer = document.createElement("div");
         const spellListHeading = document.createElement("h3");
         spellListHeading.innerHTML = `Level ${i + 1} Spells`;
-        spellListContainer.id = `spell-list-container${i}`;
         spellListContainer.className = "spell-list-container";
         spellsContainer.appendChild(spellListContainer);
         spellListContainer.appendChild(spellListHeading);
         for (let j = 0; j < spellLevelArr[i]; j++) {
             const spellLabel = document.createElement("label");
+            const infoIconDiv = document.createElement("span");
+            infoIconDiv.className = "info-icon";
+            infoIconDiv.innerHTML = infoIcon;
             spellLabel.innerHTML = `Spell ${j + 1}`;
             spellLabel.className = "spell-label";
             spellLabel.htmlFor = `spell-list${i}`;
-            spellLabel.addEventListener("mouseover", (event) => {
-                const spellIndex = event.target.nextSibling.value;
-                console.log(spellIndex);
-                const spellPopup = document.getElementById(`spell-popup-${spellIndex}`);
-                spellPopup.style.display = "block";
+            infoIconDiv.addEventListener("click", (event) => {
+                const spellIndex = event.target.parentNode.nextSibling.value;
+                if (spellIndex === "undefined" || spellIndex === "-") return;
+                const popupContainer = document.getElementById("popup-container");
+                const overlay = document.getElementById("popup-overlay");
+                spellInfoPopup(spellIndex);
+                overlay.style.display = "block";
+                popupContainer.style.display = "block";
+                popupContainer.focus();
             });
-            spellLabel.addEventListener("mouseout", (event) => {
-                const spellIndex = event.target.nextSibling.value;
-                const spellPopup = document.getElementById(`spell-popup-${spellIndex}`);
-                spellPopup.style.display = "none";
-            });
-            spellListContainer.appendChild(spellLabel);
+            const iconSelectContainer = document.createElement("div");
+            iconSelectContainer.className = "icon-select-container";
+            spellListContainer.appendChild(iconSelectContainer);
             const spellList = document.createElement("select");
             spellList.id = `spell-list${i}`;
             spellList.className = "spell-list";
             spellList.name = `spell-list${i}`;
-            spellListContainer.appendChild(spellList);
+            spellList.place
+            iconSelectContainer.appendChild(infoIconDiv);
+            iconSelectContainer.appendChild(spellList);
+            iconSelectContainer.appendChild(spellLabel);
             createOption("-", spellList);
             const spellNames = await getSpellNames(i, className);
             for (let k = 0; k < spellNames.length; k++) {
@@ -61,12 +69,12 @@ function createOption(spellName, parentDiv, spellIndex) {
     option.classList.add("spell-option");
     option.value = spellIndex;
     option.text = spellName;
-    spellInfoPopup(spellIndex);
     parentDiv.appendChild(option);
 }
 
 export function clearOptions() {
     const spellContainer = document.getElementById("spell-container");
+    spellContainer.innerHTML = "";
     while (spellContainer.firstChild) {
         spellContainer.removeChild(spellContainer.firstChild);
     }
@@ -119,7 +127,7 @@ async function getSpellNames(index, className) {
     }
 }
 
-function spellInfoPopup(spell) {
+export function spellInfoPopup(spell) {
     if (spell === "-") return;
     fetch(`https://www.dnd5eapi.co/api/spells/${spell}`)
         .then(response => response.json())
@@ -129,22 +137,16 @@ function spellInfoPopup(spell) {
 }
 
 function createSpellPopup(data) {
-    const parentDiv = document.getElementById("spell-container");
-    const spellPopup = document.createElement("div");
-    spellPopup.id = `spell-popup-${data.index}`;
-    spellPopup.className = "popup";
-    const spellName = document.createElement("h2");
-    spellName.innerHTML = data.name;
-    const spellDescription = document.createElement("p");
-    spellDescription.innerHTML = data.desc[0];
-    const spellRange = document.createElement("p");
-    spellRange.innerHTML = `Range: ${data.range}`;
-    const spellDuration = document.createElement("p");
-    spellDuration.innerHTML = `Duration: ${data.duration}`;
-    spellPopup.appendChild(spellName);
-    spellPopup.appendChild(spellDescription);
-    spellPopup.appendChild(spellRange);
-    spellPopup.appendChild(spellDuration);
-    parentDiv.appendChild(spellPopup);
-
+    const popupHeading = document.getElementById("popup-heading");
+    popupHeading.innerHTML = data.name;
+    const popupDescription = document.getElementById("popup-desc");
+    popupDescription.innerHTML = data.desc[0];
+    const popupDesc2 = document.getElementById("popup-desc2");
+    popupDesc2.innerHTML = data.desc[1];
+    const popupRange = document.getElementById("popup-range");
+    popupRange.innerHTML = `Range: ${data.range}`;
+    const popusCastTime = document.getElementById("popup-cast-time");
+    popusCastTime.innerHTML = `Casting Time: ${data.casting_time}`;
+    const popupDuration = document.getElementById("popup-duration");
+    popupDuration.innerHTML = `Duration: ${data.duration}`;
 }

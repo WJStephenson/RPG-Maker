@@ -11,6 +11,7 @@ const raceSelect = document.getElementById('race-selection');
 export const classSelect = document.getElementById('class-selection');
 const randomButton = document.getElementById("random-name");
 const level = document.getElementById("level");
+const closeButton = document.getElementById("close-button");
 
 classSelect.addEventListener('change', () => {
     getClassInfo(classSelect.value);
@@ -38,4 +39,16 @@ inputElements.forEach((input) => {
   input.addEventListener("input", (event) => {
     updateStatPoints(event.target);
   });
+});
+
+level.addEventListener('change', () => {
+    clearOptions();
+    getSpells(level.value, classSelect.value);
+});
+
+closeButton.addEventListener("click", () => {
+  const popupContainer = document.getElementById("popup-container");
+  const overlay = document.getElementById("popup-overlay");
+  popupContainer.style.display = "none";
+  overlay.style.display = "none";
 });
