@@ -6,6 +6,7 @@
 
 * {
     font-family: 'Acme', sans-serif;
+    transition: all 0.2s ease-in-out;
 }
 
 html {
@@ -74,6 +75,16 @@ h3 {
     align-items: center;
 }
 
+.hide-up-down::-webkit-inner-spin-button,
+.hide-up-down::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hide-up-down {
+  -moz-appearance: textfield; /* Firefox */
+}
+
 .character-container input {
     font-size: 2rem;
     font-weight: bold;
@@ -87,7 +98,7 @@ h3 {
     border: 2px dashed #333;
 }
 
-.character-container button {
+.random-button {
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
@@ -98,11 +109,11 @@ h3 {
     transition: all 0.2s ease-in-out;
 }
 
-.character-container button:hover {
+.random-button:hover {
     rotate: 15deg;
 }
 
-.character-container button:active {
+.random-button:active {
     transform: translateY(3px);
 }
 
@@ -213,7 +224,7 @@ p {
 }
 
 .spell-container {
-    display: grid;
+    display: none;
     grid-template-columns: repeat(3, 1fr);
     justify-content: space-evenly;
     gap: 1rem;

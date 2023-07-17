@@ -1,7 +1,8 @@
 
-import { classSelect } from "./main.js";
+import { classSelect } from "../main.js";
 
 const infoIcon = `<i class="fa-solid fa-scroll"></i>`;
+const spellsContainer = document.querySelector(".spell-container");
 
 export function getSpells(level, className) {
     fetch(`https://www.dnd5eapi.co/api/classes/${className}/levels/${level}`)
@@ -17,8 +18,12 @@ function findSpellSlots(data) {
 }
 
 async function getSpellList(className, spellLevelArr) {
-    const spellsContainer = document.getElementById("spell-container");
-    if (spellLevelArr.length === 1) return;
+    if (spellLevelArr.length === 0) {
+        spellsContainer.style.display = "none";
+        console.log("No spells for this class");
+        return;
+    }
+    spellsContainer.style.display = "grid";
     for (let i = 0; i < spellLevelArr.length; i++) {
         const spellListContainer = document.createElement("div");
         const spellListHeading = document.createElement("h3");
@@ -72,18 +77,28 @@ function createOption(spellName, parentDiv, spellIndex) {
     parentDiv.appendChild(option);
 }
 
-export function clearOptions() {
-    const spellContainer = document.getElementById("spell-container");
-    spellContainer.innerHTML = "";
-    while (spellContainer.firstChild) {
-        spellContainer.removeChild(spellContainer.firstChild);
-    }
+export async function clearOptions() {
+    return new Promise((resolve) => {
+        const spellDivs = document.querySelectorAll(".spell-list-container");
+        const spellContainer = document.getElementById("spell-container");
+
+        spellDivs.forEach((div) => {
+            spellContainer.removeChild(div);
+        });
+
+        console.log("cleared");
+        getSpells(level.value, classSelect.value);
+
+        resolve();
+    });
 }
 
 function getSpellSlotDetail(data) {
     const slotArray = [];
-
-    slotArray.push(data.spellcasting.cantrips_known);
+    if ("spellcasting" in data === false) {
+        console.log("no spell slots level 1");
+        return slotArray;
+    }
 
     if (data.spellcasting.spell_slots_level_1 > 0) {
         slotArray.push(data.spellcasting.spell_slots_level_1);
@@ -112,6 +127,7 @@ function getSpellSlotDetail(data) {
     if (data.spellcasting.spell_slots_level_9 > 0) {
         slotArray.push(data.spellcasting.spell_slots_level_9);
     }
+    console.log(slotArray);
     return slotArray;
 }
 
@@ -119,7 +135,6 @@ async function getSpellNames(index, className) {
     try {
         const response = await fetch(`https://www.dnd5eapi.co/api/classes/${className}/levels/${index}/spells`);
         const data = await response.json();
-        console.log(data.results);
         return data.results;
     } catch (error) {
         console.log(error);
@@ -140,9 +155,10 @@ function createSpellPopup(data) {
     const popupHeading = document.getElementById("popup-heading");
     popupHeading.innerHTML = data.name;
     const popupDescription = document.getElementById("popup-desc");
+    data.desc.forEach(desc => {
+        popupDescription.innerHTML += `<p>${desc}</p>`;
+    });
     popupDescription.innerHTML = data.desc[0];
-    const popupDesc2 = document.getElementById("popup-desc2");
-    popupDesc2.innerHTML = data.desc[1];
     const popupRange = document.getElementById("popup-range");
     popupRange.innerHTML = `Range: ${data.range}`;
     const popusCastTime = document.getElementById("popup-cast-time");

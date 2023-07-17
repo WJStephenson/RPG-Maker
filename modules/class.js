@@ -8,6 +8,7 @@ export function getClassInfo(className) {
             fetch(`https://www.dnd5eapi.co${classInfo}`)
                 .then(responseRaw => responseRaw.json())
                 .then(response => {
+                    console.log(response);
                     classDescription.innerHTML = response.desc[0];
         })
     })

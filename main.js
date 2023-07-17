@@ -1,22 +1,22 @@
-import { rollDice, clearRolls } from "./dice.js";
-import { updateStatPoints, inputElements } from "./stats.js";
-import { getRaceInfo } from "./race.js";
-import { generateRandomName } from "./name.js";
-import { getClassInfo } from "./class.js";
-import { clearOptions, getSpells } from "./spells.js";
+import { rollDice, clearRolls } from "./modules/dice.js";
+import { generateRandomStats } from "./modules/stats.js";
+import { getRaceInfo } from "./modules/race.js";
+import { generateRandomName } from "./modules/name.js";
+import { getClassInfo } from "./modules/class.js";
+import { clearOptions } from "./modules/spells.js";
 
 const rollButton = document.getElementById('roll-dice');
 const clearButton = document.getElementById('clear-rolls');
 const raceSelect = document.getElementById('race-selection');
 export const classSelect = document.getElementById('class-selection');
-const randomButton = document.getElementById("random-name");
+const randomNameButton = document.getElementById("random-name");
+const randomStatsButton = document.getElementById("random-stats");
 const level = document.getElementById("level");
 const closeButton = document.getElementById("close-button");
 
 classSelect.addEventListener('change', () => {
     getClassInfo(classSelect.value);
     clearOptions();
-    getSpells(level.value, classSelect.value);
 });
 
 raceSelect.addEventListener('change', () => {
@@ -31,19 +31,16 @@ clearButton.addEventListener('click', () => {
     clearRolls();
 });
 
-randomButton.addEventListener("click", () => {
+randomNameButton.addEventListener("click", () => {
   generateRandomName();
 });
 
-inputElements.forEach((input) => {
-  input.addEventListener("input", (event) => {
-    updateStatPoints(event.target);
-  });
+randomStatsButton.addEventListener("click", () => {
+  generateRandomStats();
 });
 
-level.addEventListener('change', () => {
+level.addEventListener('input', () => {
     clearOptions();
-    getSpells(level.value, classSelect.value);
 });
 
 closeButton.addEventListener("click", () => {
@@ -52,3 +49,11 @@ closeButton.addEventListener("click", () => {
   popupContainer.style.display = "none";
   overlay.style.display = "none";
 });
+
+function preventUpDown(event) {
+  event.preventDefault();
+}
+
+function preventScroll(event) {
+  event.preventDefault();
+}

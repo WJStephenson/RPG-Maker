@@ -1,15 +1,28 @@
 const diceResultContainer = document.getElementById("dice-result");
 const clearButton = document.getElementById("clear-rolls");
 
-export function rollDice() {
-  const diceQuantity = document.getElementById("dice-quantity").value;
-  const diceType = document.getElementById("dice-select").value;
-  const addition = document.getElementById("dice-addition").value;
+export function rollDice(forStats = false) {
+  let diceQuantity = document.getElementById("dice-quantity").value;
+  let diceType = document.getElementById("dice-select").value;
+  let addition = document.getElementById("dice-addition").value;
   const resultDiv = document.createElement("div");
   const resultInfo = document.createElement("span");
   const diceResult = document.createElement("p");
   let total = 0;
   let color = colorSelector();
+  const statRolls = [];
+
+  if (forStats) {
+    diceQuantity = 4;
+    diceType = 6;
+    addition = 0;
+    const diceQ = document.querySelector('option[value="6"]');
+    diceQ.selected = true;
+    const diceT = document.getElementById("dice-quantity");
+    diceT.value = 4;
+    const diceA = document.getElementById("dice-addition");
+    diceA.value = 0;
+  }
 
   clearButton.style.display = "block";
   diceResultContainer.style.display = "block";
@@ -25,6 +38,7 @@ export function rollDice() {
     const diceRoll = Math.floor(Math.random() * diceType) + 1;
     resultInfo.innerHTML += "<br>" + (i + 1) + ": " + diceRoll;
     total += diceRoll;
+    statRolls.push(diceRoll);
   }
   resultDiv.id = "result-div";
   resultDiv.appendChild(resultInfo);
@@ -41,6 +55,7 @@ export function rollDice() {
   } else {
     diceResult.innerHTML = total;
   }
+  return statRolls;
 }
 
 export function clearRolls() {
