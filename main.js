@@ -4,6 +4,7 @@ import { getRaceInfo } from "./modules/race.js";
 import { generateRandomName } from "./modules/name.js";
 import { getClassInfo } from "./modules/class.js";
 import { clearOptions } from "./modules/spells.js";
+import { getEquipmentInfo } from "./modules/equipment.js";
 
 const rollButton = document.getElementById('roll-dice');
 const clearButton = document.getElementById('clear-rolls');
@@ -15,6 +16,7 @@ const level = document.getElementById("level");
 const closeButton = document.getElementById("close-button");
 
 classSelect.addEventListener('change', () => {
+    getEquipmentInfo(classSelect.value);
     getClassInfo(classSelect.value);
     clearOptions();
 });

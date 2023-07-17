@@ -77,12 +77,12 @@ h3 {
 
 .hide-up-down::-webkit-inner-spin-button,
 .hide-up-down::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    appearance: none;
+    margin: 0;
 }
 
 .hide-up-down {
-  -moz-appearance: textfield; /* Firefox */
+    appearance: textfield;
 }
 
 .character-container input {
@@ -186,7 +186,8 @@ p {
     padding: 10px;
 }
 
-#clear-rolls, #dice-result {
+#clear-rolls,
+#dice-result {
     display: none;
 }
 
@@ -214,7 +215,8 @@ p {
     display: block;
 }
 
-.race-container, .class-container {
+.race-container,
+.class-container {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -237,10 +239,38 @@ p {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 0rem;
     padding: 1rem;
     border: 2px dashed #333;
     min-height: 200px;
+}
+
+.equipment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem;
+    gap: 1rem;
+    border: 2px dashed #333;
+    min-height: 200px;
+}
+
+.equipment-container li,
+.equipment-container select {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.equipment-choice {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 10px;
+    border: 2px dashed #333;
 }
 
 .spell-list {
@@ -271,9 +301,9 @@ p {
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  #close-button {
+}
+
+#close-button {
     position: fixed;
     top: 10px;
     right: 10px;
@@ -286,9 +316,9 @@ p {
     background-color: #ccc;
     color: #fff;
     cursor: pointer;
-  }
+}
 
-  #popup-overlay {
+#popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -297,13 +327,13 @@ p {
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
     z-index: 9998;
-  }
+}
 
-  .icon-select-container {
+.icon-select-container {
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
     gap: 1rem;
     margin: 5px;
-  }
+}

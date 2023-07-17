@@ -86,7 +86,6 @@ export async function clearOptions() {
             spellContainer.removeChild(div);
         });
 
-        console.log("cleared");
         getSpells(level.value, classSelect.value);
 
         resolve();
@@ -96,7 +95,6 @@ export async function clearOptions() {
 function getSpellSlotDetail(data) {
     const slotArray = [];
     if ("spellcasting" in data === false) {
-        console.log("no spell slots level 1");
         return slotArray;
     }
 
@@ -127,7 +125,6 @@ function getSpellSlotDetail(data) {
     if (data.spellcasting.spell_slots_level_9 > 0) {
         slotArray.push(data.spellcasting.spell_slots_level_9);
     }
-    console.log(slotArray);
     return slotArray;
 }
 
