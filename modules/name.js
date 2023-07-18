@@ -1,8 +1,4 @@
 const name = document.getElementById("character-name");
-const randomButton = document.getElementById("random-name");
-randomButton.addEventListener("click", () => {
-  generateRandomName();
-});
 
 export function generateRandomName() {
     fetch(`https://chartopia.d12dev.com/api/charts/19/roll/`, {
