@@ -11,7 +11,6 @@
 
 html {
     line-height: 1.5;
-    color: #333;
     margin: 0;
     background-image: url(/Assets/rpg-bg.png);
     background-repeat: no-repeat;
@@ -19,354 +18,188 @@ html {
     background-position: center;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-header {
-    background-color: transparent;
-    padding: 0;
-    display: flex;
-}
-
 main {
-    max-width: 1200px;
-    width: 90vw;
-    height: 100vh;
-    margin: auto;
-    padding: 2rem;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-areas: 
+    "dice character character"
+    "stats race class"
+    "stats race class"
+    "stats equipment equipment"
+    "skills skills skills"
+    "spell spell spell"
+    "save save save";
+    gap: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
-nav {
-    display: flex;
-    align-items: center;
-    gap: 4rem;
-    margin: auto;
-    margin-top: 1rem;
-}
-
-nav a {
-    text-decoration: none;
-    color: #333;
-    font-size: 2rem;
-    font-weight: bold;
-    transition: all 0.2s ease-in-out;
-}
-
-nav a:hover {
-    color: #f00;
-}
-
-h3 {
+label, p {
     font-size: 1.5rem;
     font-weight: bold;
-    text-align: center;
-    margin: 0;
 }
 
-.character-container {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 2rem;
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    align-items: center;
-}
 
-.hide-up-down::-webkit-inner-spin-button,
-.hide-up-down::-webkit-outer-spin-button {
-    appearance: none;
-    margin: 0;
-}
-
-.hide-up-down {
-    appearance: textfield;
-}
-
-.character-container input {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 0;
-    border: 2px dashed #333;
-}
-
-.character-container input:focus {
+input {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    border: 2px solid #333;
+    border-radius: 0.5rem;
     outline: none;
-    border: 2px dashed #333;
+    background-color: transparent;
 }
 
-.random-button {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 0;
-    border: none;
-    background-color: #fff;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-
-.random-button:hover {
-    rotate: 15deg;
-}
-
-.random-button:active {
-    transform: translateY(3px);
-}
-
-.stat-container {
+section {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+button {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+section i {
+    font-size: 2rem;
+}
+
+.character-container {
+    grid-area: character;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.stat-container {
+    grid-area: stats;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
     padding: 1rem;
     margin: 1rem;
 }
 
 .stat {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
-    gap: 0.5rem;
-}
-
-.stat-card {
-    display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    gap: 4rem;
-}
-
-.stat input {
-    width: 40px;
-}
-
-.card {
-    background-color: rgba(255, 255, 255, 0.3);
-    padding: 1rem;
-    border: 2px dashed #333;
+    margin: 2rem;
 }
 
 .dice-roller-container {
-    margin: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    height: 100px;
-}
-
-#dice-quantity,
-#dice-addition {
-    width: 30px;
-}
-
-label,
-p {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-#dice-result {
-    font-size: 2rem;
-    font-weight: bold;
-    max-height: 100px;
-    width: 200px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    grid-area: dice;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10px;
 }
 
-#clear-rolls,
-#dice-result {
-    display: none;
-}
-
-#dice-result>div>p {
-    margin: 0;
-    text-align: center;
-    width: 100%;
-    cursor: pointer;
-    user-select: none;
-}
-
-.popup {
-    display: none;
-    position: fixed;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border: 2px dashed #333;
-    border-radius: 4px;
-    width: 200px;
-    top: 50px;
-    left: 50px;
-}
-
-#result-div:hover .popup {
-    display: block;
-}
-
-.race-container,
-.class-container {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 1rem;
-    margin: 1rem;
-    height: 200px;
-}
-
-.spell-container {
-    display: none;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: space-evenly;
-    gap: 1rem;
-    margin: 1rem;
-    flex-wrap: wrap;
-}
-
-.spell-list-container {
+.race-container {
+    grid-area: race;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
     padding: 1rem;
-    border: 2px dashed #333;
-    min-height: 200px;
+    margin: 1rem;
+}
+
+.class-container {
+    grid-area: class;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 1rem;
 }
 
 .equipment-container {
+    grid-area: equipment;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-start;
-    padding: 1rem;
     gap: 1rem;
-    border: 2px dashed #333;
-    min-height: 200px;
+    padding: 1rem;
+    margin: 1rem;
 }
 
-.equipment-container li,
-.equipment-container select {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 0;
-}
-
-.equipment-choice {
+.spell-container {
+    grid-area: spell;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     gap: 1rem;
-    padding: 10px;
-    border: 2px dashed #333;
+    padding: 1rem;
+    margin: 1rem;
 }
 
-.spell-list {
-    width: 120px;
+.skills-container {
+    grid-area: skills;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 1rem;
 }
 
-.spell-label {
-    font-size: 1.2rem;
-    margin: 0;
-    width: 60px;
-}
-
-.info-icon {
-    cursor: pointer;
-    user-select: none;
-}
-
-#popup-container {
-    position: fixed;
+.popup-container {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    height: auto;
-    background-color: #fff;
     z-index: 9999;
+}
+
+.overlay {
     display: none;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-#close-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 50%;
-    border: none;
-    background-color: #ccc;
-    color: #fff;
-    cursor: pointer;
-}
-
-#popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+#result-div {
     display: none;
-    z-index: 9998;
+    font-size: 2rem;
+    font-weight: bold;
 }
-
-.icon-select-container {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin: 5px;
-}
-
-
 
 
 
 .saved-characters-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    margin: 1rem;
+    grid-area: save;
 }
-
-.saved-characters-container p {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 0;
-}
-
-.character {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    border: 2px dashed #333;
-    font-size: 2rem;
-} 

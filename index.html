@@ -22,9 +22,13 @@
       <label for="character-name">Character Name:</label>
       <input type="text" name="character-name" id="character-name" />
       <button id="random-name" class="random-button"><i class="fa-solid fa-dice-d20"></i></button>
-      <div class="level">
+      <div class="character-container">
         <label for="level">Level:</label>
         <input type="number" name="level" id="level" class="hide-up-down" min="1" max="20" value="1" />
+      </div>
+      <div class="character-container">
+        <label for="health">Health:</label>
+        <input type="number" name="health" id="health" class="hide-up-down" min="1" value="1" />
       </div>
     </section>
     <section class="stat-container card">
@@ -33,26 +37,32 @@
         <div class="stat">
           <label for="strength">Strength</label>
           <input type="number" name="strength" id="strength" min="1" max="20" value="1" />
+          <p id="strength-modifier">-5</p>
         </div>
         <div class="stat">
           <label for="dexterity">Dexterity</label>
           <input type="number" name="dexterity" id="dexterity" min="1" max="20" value="1" />
+          <p id="dexterity-modifier">-5</p>
         </div>
         <div class="stat">
           <label for="constitution">Constitution</label>
           <input type="number" name="constitution" id="constitution" min="1" max="20" value="1" />
+          <p id="constitution-modifier">-5</p>
         </div>
         <div class="stat">
           <label for="intelligence">Intelligence</label>
           <input type="number" name="intelligence" id="intelligence" min="1" max="20" value="1" />
+          <p id="intelligence-modifier">-5</p>
         </div>
         <div class="stat">
           <label for="wisdom">Wisdom</label>
           <input type="number" name="wisdom" id="wisdom" min="1" max="20" value="1" />
+          <p id="wisdom-modifier">-5</p>
         </div>
         <div class="stat">
           <label for="charisma">Charisma</label>
           <input type="number" name="charisma" id="charisma" min="1" max="20" value="1" />
+          <p id="charisma-modifier">-5</p>
         </div>
       </div>
     </section>
@@ -122,6 +132,98 @@
       <p id="class-description">Select a race</p>
     </section>
     <section class="equipment-container card">
+    </section>
+    <section class="skills-container card">
+      <div class="skill">
+        <label for="acrobatics">Acrobatics</label>
+        <input type="checkbox" name="acrobatics" id="acrobatics" />
+        <p id="acrobatics-total"></p>
+      </div>
+      <div class="skill">
+        <label for="animal-handling">Animal Handling</label>
+        <input type="checkbox" name="animal-handling" id="animal-handling" />
+        <p id="animal-handling-total"></p>
+      </div>
+      <div class="skill">
+        <label for="arcana">Arcana</label>
+        <input type="checkbox" name="arcana" id="arcana" />
+        <p id="arcana-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="athletics">Athletics</label>
+        <input type="checkbox" name="athletics" id="athletics" />
+        <p id="athletics-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="deception">Deception</label>
+        <input type="checkbox" name="deception" id="deception" />
+        <p id="deception-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="history">History</label>
+        <input type="checkbox" name="history" id="history" />
+        <p id="history-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="insight">Insight</label>
+        <input type="checkbox" name="insight" id="insight" />
+        <p id="insight-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="intimidation">Intimidation</label>
+        <input type="checkbox" name="intimidation" id="intimidation" />
+        <p id="intimidation-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="investigation">Investigation</label>
+        <input type="checkbox" name="investigation" id="investigation" />
+        <p id="investigation-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="medicine">Medicine</label>
+        <input type="checkbox" name="medicine" id="medicine" />
+        <p id="medicine-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="nature">Nature</label>
+        <input type="checkbox" name="nature" id="nature" />
+        <p id="nature-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="perception">Perception</label>
+        <input type="checkbox" name="perception" id="perception" />
+        <p id="perception-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="performance">Performance</label>
+        <input type="checkbox" name="performance" id="performance" />
+        <p id="performance-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="persuasion">Persuasion</label>
+        <input type="checkbox" name="persuasion" id="persuasion" />
+        <p id="persuasion-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="religion">Religion</label>
+        <input type="checkbox" name="religion" id="religion" />
+        <p id="religion-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="sleight-of-hand">Sleight of Hand</label>
+        <input type="checkbox" name="sleight-of-hand" id="sleight-of-hand" />
+        <p id="sleight-of-hand-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="stealth">Stealth</label>
+        <input type="checkbox" name="stealth" id="stealth" />
+        <p id="stealth-total">0</p>
+      </div>
+      <div class="skill">
+        <label for="survival">Survival</label>
+        <input type="checkbox" name="survival" id="survival" />
+        <p id="survival-total">0</p>
+      </div>
     </section>
     <section class="spell-container card" id="spell-container">
     </section>

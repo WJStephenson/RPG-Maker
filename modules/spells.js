@@ -4,7 +4,7 @@ import { classSelect } from "../main.js";
 const infoIcon = `<i class="fa-solid fa-scroll"></i>`;
 const spellsContainer = document.querySelector(".spell-container");
 
-export function getSpells(level, className) {
+export async function getSpells(level, className) {
     fetch(`https://www.dnd5eapi.co/api/classes/${className}/levels/${level}`)
         .then(response => response.json())
         .then(data => {

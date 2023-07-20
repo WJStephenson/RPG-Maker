@@ -1,9 +1,9 @@
 import { rollDice, clearRolls } from "./modules/dice.js";
-import { generateRandomStats } from "./modules/stats.js";
+import { generateRandomStats, updateModifierValues } from "./modules/stats.js";
 import { getRaceInfo } from "./modules/race.js";
 import { generateRandomName } from "./modules/name.js";
 import { getClassInfo } from "./modules/class.js";
-import { clearOptions } from "./modules/spells.js";
+import { clearOptions, getSpells } from "./modules/spells.js";
 import { getEquipmentInfo } from "./modules/equipment.js";
 
 const rollButton = document.getElementById('roll-dice');
@@ -15,11 +15,13 @@ const randomStatsButton = document.getElementById("random-stats");
 const level = document.getElementById("level");
 const closeButton = document.getElementById("close-button");
 const saveButton = document.getElementById("save-button");
+const statInputs = document.querySelectorAll(".stat input");
 
 class Character {
-  constructor(name, level, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, item1, item2, item3, item4, item5) {
+  constructor(name, level, spells, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, item1, item2, item3, item4, item5) {
     this.name = name;
     this.level = level;
+    this.spells = spells;
     this.strength = strength;
     this.dexterity = dexterity;
     this.constitution = constitution;
@@ -35,6 +37,12 @@ class Character {
     this.item5 = item5;
   }
 }
+
+statInputs.forEach((input) => {
+  input.addEventListener('input', () => {
+    updateModifierValues();
+  });
+});
 
 classSelect.addEventListener('change', () => {
   getEquipmentInfo(classSelect.value);
@@ -101,8 +109,15 @@ function saveCharacter() {
   const race = raceSelect.value;
   const _class = classSelect.value;
 
-  const character = new Character(name, level, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, "", "", "", "", "");
+  const spellsArray = [];
+  const spells = document.querySelectorAll(".spell-list");
 
+  spells.forEach(spell => {
+    spellsArray.push(spell.value);
+  });
+
+  const character = new Character(name, level, spellsArray, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, "", "", "", "", "");
+  console.log(character);
   localStorage.setItem(name, JSON.stringify(character));
 }
 
@@ -118,8 +133,9 @@ function getUrlParameters() {
   }
 }
 
-function loadCharacter(characterName) {
+async function loadCharacter(characterName) {
   const character = JSON.parse(localStorage.getItem(characterName));
+  console.log(character);
 
   let name = document.getElementById("character-name");
   let level = document.getElementById("level");
@@ -142,6 +158,13 @@ function loadCharacter(characterName) {
   charisma.value = character.charisma;
   race.value = character.race;
   _class.value = character._class;
-  getClassInfo(_class.value);
   getRaceInfo(race.value);
+  getClassInfo(_class.value);
+
+  const spells = await getSpells(level.value, _class.value);
+
+  const spellInputs = document.querySelectorAll(".spell-list");
+  spellInputs.forEach((spell, index) => {
+    spell.value = character.spells[index];
+  });
 }

@@ -1,4 +1,5 @@
 import { rollDice } from "./dice.js";
+import { updateSkillValues } from "./skills.js";
 
 const inputElements = document.querySelectorAll(".stat input");
 
@@ -16,6 +17,23 @@ export function generateRandomStats() {
   for (let i = 0; i < inputElements.length; i++) {
     inputElements[i].value = statValues[i];
   }
+  updateModifierValues();
 };
 
+export function updateModifierValues() {
+  const modifierElements = document.querySelectorAll(".stat p");
+  modifierElements.forEach((modifierElement) => {
+    const statValue = parseInt(modifierElement.previousElementSibling.value);
+    if (calculateModifier(statValue) >= 0) {
+      modifierElement.innerHTML = `+ ${calculateModifier(statValue)}`;
+    } else {
+      modifierElement.innerHTML = `${calculateModifier(statValue)}`;
+    }
+  });
+  updateSkillValues(modifierElements[0].innerHTML, modifierElements[1].innerHTML, modifierElements[3].innerHTML, modifierElements[4].innerHTML, modifierElements[5].innerHTML);
+}
+
+function calculateModifier(statValue) {
+  return Math.floor((statValue - 10) / 2);
+}
 
