@@ -1,5 +1,6 @@
 import { rollDice } from "./dice.js";
 import { updateSkillValues } from "./skills.js";
+import { armorAC } from "./equipment.js";
 
 const inputElements = document.querySelectorAll(".stat input");
 
@@ -32,6 +33,7 @@ export function updateModifierValues() {
   });
   updateSkillValues(modifierElements[0].innerHTML, modifierElements[1].innerHTML, modifierElements[3].innerHTML, modifierElements[4].innerHTML, modifierElements[5].innerHTML);
 }
+
 
 function calculateModifier(statValue) {
   return Math.floor((statValue - 10) / 2);

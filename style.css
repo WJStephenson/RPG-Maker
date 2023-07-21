@@ -17,26 +17,48 @@ html {
     background-size: cover;
     background-position: center;
 }
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    gap: 3rem;
+}
+
+nav>a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: rgb(211, 211, 211);
+    transition: all 0.2s ease-in-out;
+}
+
+nav>a:hover {
+    color: rgb(136, 136, 136);
+}
 
 main {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 2fr 2fr;
-    grid-template-areas: 
-    "dice character character"
-    "stats race class"
-    "stats race class"
-    "stats equipment equipment"
-    "skills skills skills"
-    "spell spell spell"
-    "save save save";
+    grid-template-areas:
+        "character character character"
+        "class class class"
+        "race race race"
+        "stats stats stats"
+        "skills equipment equipment"
+        "skills equipment equipment"
+        "spell spell spell"
+        "save save save";
     gap: 1rem;
-    padding: 1rem;
-    margin: 1rem;
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 70dvw;
+    max-width: 1440px;
+    margin: 0 auto;
+    /* overflow-x: hidden; */
 }
 
-label, p {
+label,
+p {
     font-size: 1.5rem;
     font-weight: bold;
 }
@@ -59,6 +81,7 @@ section {
     padding: 1rem;
     margin: 1rem;
     background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 2rem;
 }
 
 button {
@@ -77,6 +100,7 @@ section i {
 .character-container {
     grid-area: character;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
@@ -84,15 +108,48 @@ section i {
     margin: 1rem;
 }
 
-.stat-container {
-    grid-area: stats;
+.sub-character-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.sub-character-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5rem;
+}
+
+.sub-character-container p, .sub-character-container label {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+}
+
+.character-container input[type=number]::-webkit-inner-spin-button, .character-container input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+    display: none;
+}
+
+.stat-container {
+    grid-area: stats;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
     padding: 1rem;
     margin: 1rem;
+}
+
+.stat-card {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .stat {
@@ -100,15 +157,79 @@ section i {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 2rem;
+    gap: 1rem;
+    margin: 0 2rem;
 }
 
 .dice-roller-container {
-    grid-area: dice;
+    background-color: transparent;
+}
+
+.side-menu {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+}
+
+.side-menu {
+    position: fixed;
+    top: 30px;
+    right: -29%;
+    width: 300px;
+    height: calc(100vh - 80px);
+    transition: all 0.5s ease;
+    background-color: rgb(136, 136, 136);
+    border-radius: 1rem;
+}
+
+main>input[type=checkbox] {
+    display: none;
+}
+
+#menu-checkbox:checked~.side-menu {
+    right: 0;
+}
+
+main>.menu-toggle {
+    position: fixed;
+    cursor: pointer;
+    top: 10px;
+    right: 30px;
+    transition: all 0.5s ease;
+    user-select: none;
+}
+
+.menu-toggle:hover {
+    scale: 1.1;
+}
+
+#menu-checkbox:checked~.side-menu {
+    right: 0;
+}
+
+#dice-result {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(100vh - 80px);
+    width: 80%;
+    background-color: rgb(136, 136, 136);
+    border-radius: 1rem;
+    overflow-y: scroll;
+}
+
+#dice-result p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+#dice-result span {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
 }
 
 .race-container {
@@ -133,26 +254,37 @@ section i {
     margin: 1rem;
 }
 
-.equipment-container {
-    grid-area: equipment;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    margin: 1rem;
-}
-
 .spell-container {
     grid-area: spell;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+
+.spell-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
     padding: 1rem;
-    margin: 1rem;
+    border: 2px solid #333;
+    min-height: 200px;
+}
+
+.icon-select-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-select-container label,
+.icon-select-container i {
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .skills-container {
@@ -166,6 +298,48 @@ section i {
     margin: 1rem;
 }
 
+.skill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+    width: 95%;
+}
+
+.skill p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.skill label {
+    font-size: 1rem;
+}
+
+.equipment-container {
+    grid-area: equipment;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.equipment-container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem;
+    border: 2px solid #333;
+    height: 200px;
+}
+
+.equipment-container form label {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+}
+
 .popup-container {
     display: none;
     flex-direction: column;
@@ -173,10 +347,13 @@ section i {
     gap: 1rem;
     padding: 1rem;
     margin: 1rem;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 50vw;
+    min-width: 300px;
+    max-width: 600px;
     z-index: 9999;
 }
 
@@ -191,14 +368,6 @@ section i {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
-
-#result-div {
-    display: none;
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-
 
 .saved-characters-container {
     grid-area: save;

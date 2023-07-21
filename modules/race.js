@@ -14,6 +14,13 @@ export function getRaceInfo(race) {
                 newListItem.innerHTML = language.name;
                 languageList.appendChild(newListItem);
             });
+            setSpeed(data.speed);
             languageDescription.innerHTML = data.language_desc;
         })
 };
+
+
+function setSpeed(speed) {
+    const speedStat = document.getElementById("speed");
+    speedStat.innerHTML = speed;
+}

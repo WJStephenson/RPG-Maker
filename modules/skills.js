@@ -22,9 +22,15 @@ export function updateSkillValues(strength, dexterity, intelligence, wisdom, cha
     for (let skill of charismaSkills) {
         updateSkill(skill, charisma);
     }
+    setinitiative(dexterity);
 }
 
 function updateSkill(skill, value) {
     const skillElement = document.querySelector(`#${skill}-total`);
     skillElement.innerHTML = value;
+}
+
+function setinitiative(value) {
+    const initiative = document.getElementById("initiative");
+    initiative.innerHTML = value;
 }

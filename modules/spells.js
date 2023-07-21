@@ -1,7 +1,7 @@
 
 import { classSelect } from "../main.js";
 
-const infoIcon = `<i class="fa-solid fa-scroll"></i>`;
+const infoIcon = `<i class="fa-solid fa-wand-sparkles"></i>`;
 const spellsContainer = document.querySelector(".spell-container");
 
 export async function getSpells(level, className) {
@@ -82,11 +82,13 @@ export async function clearOptions() {
         const spellDivs = document.querySelectorAll(".spell-list-container");
         const spellContainer = document.getElementById("spell-container");
 
-        spellDivs.forEach((div) => {
-            spellContainer.removeChild(div);
-        });
+        // spellDivs.forEach((div) => {
+        //     spellContainer.removeChild(div);
+        // });
+        spellContainer.innerHTML = "";
+        console.log(spellDivs);
 
-        getSpells(level.value, classSelect.value);
+        // getSpells(level.value, classSelect.value);
 
         resolve();
     });
@@ -150,16 +152,23 @@ export function spellInfoPopup(spell) {
 
 function createSpellPopup(data) {
     const popupHeading = document.getElementById("popup-heading");
-    popupHeading.innerHTML = data.name;
     const popupDescription = document.getElementById("popup-desc");
+    const popusCastTime = document.getElementById("popup-p2");
+    const popupRange = document.getElementById("popup-p1");
+    const popupDuration = document.getElementById("popup-p3");
+
+    popupDescription.innerHTML = "";
+    popupHeading.innerHTML = "";
+    popusCastTime.innerHTML = "";
+    popupRange.innerHTML = "";
+    popupDuration.innerHTML = "";
+
+    popupHeading.innerHTML = data.name;
     data.desc.forEach(desc => {
         popupDescription.innerHTML += `<p>${desc}</p>`;
     });
     popupDescription.innerHTML = data.desc[0];
-    const popupRange = document.getElementById("popup-range");
     popupRange.innerHTML = `Range: ${data.range}`;
-    const popusCastTime = document.getElementById("popup-cast-time");
     popusCastTime.innerHTML = `Casting Time: ${data.casting_time}`;
-    const popupDuration = document.getElementById("popup-duration");
     popupDuration.innerHTML = `Duration: ${data.duration}`;
 }

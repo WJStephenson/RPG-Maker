@@ -25,13 +25,6 @@ export function rollDice(forStats = false) {
   }
 
   clearButton.style.display = "block";
-  diceResultContainer.style.display = "block";
-
-  if (diceQuantity == 1) {
-    resultInfo.innerHTML = "Roll: ";
-  } else {
-    resultInfo.innerHTML = "Rolls: ";
-  }
 
   for (let i = 0; i < diceQuantity; i++) {
 
@@ -43,8 +36,6 @@ export function rollDice(forStats = false) {
   resultDiv.id = "result-div";
   resultDiv.appendChild(resultInfo);
   resultDiv.appendChild(diceResult);
-  resultDiv.style.backgroundColor = color;
-  resultInfo.classList.add("popup");
   diceResultContainer.insertBefore(resultDiv, diceResultContainer.firstChild);
   if (addition != 0) {
     if (addition > 0) {
@@ -64,7 +55,6 @@ export function clearRolls() {
     diceResultContainer.removeChild(diceResultContainer.firstChild);
   }
   clearButton.style.display = "none";
-  diceResultContainer.style.display = "none";
 }
 
 let currentColor = 0;

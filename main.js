@@ -4,7 +4,8 @@ import { getRaceInfo } from "./modules/race.js";
 import { generateRandomName } from "./modules/name.js";
 import { getClassInfo } from "./modules/class.js";
 import { clearOptions, getSpells } from "./modules/spells.js";
-import { getEquipmentInfo } from "./modules/equipment.js";
+import { getEquipmentInfo, armorAC } from "./modules/equipment.js";
+import { calculateHealth, calculateProficiency } from "./characters.js";
 
 const rollButton = document.getElementById('roll-dice');
 const clearButton = document.getElementById('clear-rolls');
@@ -18,10 +19,15 @@ const saveButton = document.getElementById("save-button");
 const statInputs = document.querySelectorAll(".stat input");
 
 class Character {
-  constructor(name, level, spells, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, item1, item2, item3, item4, item5) {
+  constructor(name, level, hitDie, spells, proficiency, speed, initiative, armorClass, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, item1, item2, item3, item4, item5) {
     this.name = name;
     this.level = level;
+    this.hitDie = hitDie;
     this.spells = spells;
+    this.proficiency = proficiency;
+    this.speed = speed;
+    this.initiative = initiative;
+    this.armorClass = armorClass;
     this.strength = strength;
     this.dexterity = dexterity;
     this.constitution = constitution;
@@ -41,6 +47,10 @@ class Character {
 statInputs.forEach((input) => {
   input.addEventListener('input', () => {
     updateModifierValues();
+    if (armorAC === false) {
+      const dex = document.getElementById("dexterity").value;
+      document.getElementById("armorClass").innerHTML = 10 + Math.floor((dex - 10) / 2);
+    }
   });
 });
 
@@ -48,6 +58,7 @@ classSelect.addEventListener('change', () => {
   getEquipmentInfo(classSelect.value);
   getClassInfo(classSelect.value);
   clearOptions();
+  getSpells(level.value, classSelect.value);
 });
 
 raceSelect.addEventListener('change', () => {
@@ -68,10 +79,14 @@ randomNameButton.addEventListener("click", () => {
 
 randomStatsButton.addEventListener("click", () => {
   generateRandomStats();
+  calculateHealth();
 });
 
 level.addEventListener('input', () => {
   clearOptions();
+  getSpells(level.value, classSelect.value);
+  calculateHealth();
+  calculateProficiency();
 });
 
 closeButton.addEventListener("click", () => {
