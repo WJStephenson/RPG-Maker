@@ -1,6 +1,5 @@
 import { rollDice } from "./dice.js";
 import { updateSkillValues } from "./skills.js";
-import { armorAC } from "./equipment.js";
 
 const inputElements = document.querySelectorAll(".stat input");
 
@@ -38,4 +37,27 @@ export function updateModifierValues() {
 function calculateModifier(statValue) {
   return Math.floor((statValue - 10) / 2);
 }
+
+export function updateHealth() {
+  const level = document.getElementById("level").value;
+  const hitDie = document.getElementById("hit-die");
+  const constitution = document.getElementById("constitution").value;
+  const health = document.getElementById("health");
+  const hitDieValue = parseInt(hitDie.innerHTML);
+  const constitutionModifier = Math.floor((constitution - 10) / 2);
+  let healthTotal = hitDieValue + constitutionModifier;
+  for (let i = 1; i < level; i++) {
+      const healthValue = hitDieValue + constitutionModifier;
+      healthTotal += healthValue;
+  }
+  health.value = healthTotal;
+}
+
+export function updateProficiency() {
+  const level = document.getElementById("level").value;
+  const proficiency = document.getElementById("proficiency");
+  proficiency.innerHTML = `+${Math.ceil(level / 4) + 1}`;
+}
+
+
 

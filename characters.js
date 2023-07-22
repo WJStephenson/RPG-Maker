@@ -43,29 +43,3 @@ function loadCharacter(character) {
 
     window.open(`index.html?${urlParams.toString()}`, "_self");
 }
-
-export function calculateHealth() {
-    const level = document.getElementById("level").value;
-    const hitDie = document.getElementById("hit-die");
-    const constitution = document.getElementById("constitution").value;
-    const health = document.getElementById("health");
-    const hitDieValue = parseInt(hitDie.innerHTML);
-    const constitutionModifier = Math.floor((constitution - 10) / 2);
-    let healthTotal = hitDieValue + constitutionModifier;
-    for (let i = 1; i < level; i++) {
-        const healthValue = hitDieValue + constitutionModifier;
-        healthTotal += healthValue;
-    }
-    health.value = healthTotal;
-}
-
-export function calculateProficiency() {
-    const level = document.getElementById("level").value;
-    const proficiency = document.getElementById("proficiency");
-    proficiency.innerHTML = `+${Math.ceil(level / 4) + 1}`;
-}
-
-function setArmorClass(armorClass) {
-    const armorClassStat = document.getElementById("armor-class");
-    armorClassStat.innerHTML = armorClass;
-}

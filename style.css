@@ -63,6 +63,10 @@ p {
     font-weight: bold;
 }
 
+label {
+    text-align: center;
+}
+
 
 input {
     font-size: 1.2rem;
@@ -93,8 +97,9 @@ button {
     cursor: pointer;
 }
 
-section i {
-    font-size: 2rem;
+i {
+    font-size: 1.3rem;
+    cursor: pointer;
 }
 
 .character-container {
@@ -256,7 +261,7 @@ main>.menu-toggle {
 
 .spell-container {
     grid-area: spell;
-    display: grid;
+    display: none;
     grid-template-columns: repeat(4, 1fr);
     justify-content: center;
     align-items: center;
@@ -281,8 +286,7 @@ main>.menu-toggle {
     gap: 0.5rem;
 }
 
-.icon-select-container label,
-.icon-select-container i {
+.icon-select-container label {
     font-size: 1rem;
     font-weight: bold;
 }
@@ -332,11 +336,15 @@ main>.menu-toggle {
     height: 200px;
 }
 
-.equipment-container form label {
+.equipment-div {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    font-size: 1rem;
+}
+
+.equipment-div label {
     font-size: 1rem;
 }
 

@@ -1,23 +1,21 @@
 
 import { classSelect } from "../main.js";
+import { loadSpells } from "./memory.js";
 
 const infoIcon = `<i class="fa-solid fa-wand-sparkles"></i>`;
 const spellsContainer = document.querySelector(".spell-container");
 
-export async function getSpells(level, className) {
+export async function updateSpells(level, className) {
+    clearOptions();
     fetch(`https://www.dnd5eapi.co/api/classes/${className}/levels/${level}`)
         .then(response => response.json())
         .then(data => {
-            findSpellSlots(data);
+            createSpellList(classSelect.value, getSpellSlotDetail(data));
         })
         .catch((error) => { console.log(error); });
 };
 
-function findSpellSlots(data) {
-    getSpellList(classSelect.value, getSpellSlotDetail(data));
-}
-
-async function getSpellList(className, spellLevelArr) {
+async function createSpellList(className, spellLevelArr) {
     if (spellLevelArr.length === 0) {
         spellsContainer.style.display = "none";
         console.log("No spells for this class");
@@ -66,6 +64,11 @@ async function getSpellList(className, spellLevelArr) {
                 createOption(spellNames[k].name, spellList, spellNames[k].index);
             }
         }
+        const myUrl = new URL(window.location.toLocaleString());
+        const characterName = myUrl.searchParams.get("characterName");
+        if (characterName !== null) {
+            loadSpells();
+        }
     }
 }
 
@@ -77,22 +80,10 @@ function createOption(spellName, parentDiv, spellIndex) {
     parentDiv.appendChild(option);
 }
 
-export async function clearOptions() {
-    return new Promise((resolve) => {
-        const spellDivs = document.querySelectorAll(".spell-list-container");
-        const spellContainer = document.getElementById("spell-container");
-
-        // spellDivs.forEach((div) => {
-        //     spellContainer.removeChild(div);
-        // });
-        spellContainer.innerHTML = "";
-        console.log(spellDivs);
-
-        // getSpells(level.value, classSelect.value);
-
-        resolve();
-    });
-}
+function clearOptions() {
+    const spellContainer = document.getElementById("spell-container");
+    spellContainer.innerHTML = "";
+};
 
 function getSpellSlotDetail(data) {
     const slotArray = [];
