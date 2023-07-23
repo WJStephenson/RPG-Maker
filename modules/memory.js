@@ -6,9 +6,11 @@ import { getEquipmentInfo, updateAC } from "./equipment.js";
 import { raceSelect, classSelect } from "../main.js";
 
 let characterSpellsArray = [];
+let characterEquipmentSelected = [];
+let characterEquipmentOptions = [];
 
 class Character {
-    constructor(name, level, spells, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class) {
+    constructor(name, level, spells, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, equipSelection, equipOptions) {
         this.name = name;
         this.level = level;
         this.spells = spells;
@@ -20,6 +22,8 @@ class Character {
         this.charisma = charisma;
         this.race = race;
         this._class = _class;
+        this.equipSelection = equipSelection;
+        this.equipOptions = equipOptions;
     }
 }
 
@@ -36,6 +40,8 @@ async function loadCharacter(characterName) {
     console.log(character);
 
     characterSpellsArray = [];
+    characterEquipmentSelected = [];
+    characterEquipmentOptions = [];
 
     let name = document.getElementById("character-name");
     let level = document.getElementById("level");
@@ -59,6 +65,8 @@ async function loadCharacter(characterName) {
     race.value = character.race;
     _class.value = character._class;
     characterSpellsArray = character.spells;
+    characterEquipmentSelected = character.equipSelection;
+    characterEquipmentOptions = character.equipOptions;
     getRaceInfo(race.value);
     getClassInfo(_class.value);
     getEquipmentInfo(_class.value);
@@ -70,9 +78,24 @@ async function loadCharacter(characterName) {
     updateSpells(level.value, _class.value);
 }
 
+export function loadEquipment() {
+    const equipmentSelected = document.querySelectorAll("input[type='radio']");
+    const equipmentOptions = document.querySelectorAll(".equipment-div select");
+    console.log(equipmentSelected);
+    console.log(characterEquipmentSelected);
+    console.log(equipmentOptions);
+    console.log(characterEquipmentOptions);
+    equipmentSelected.forEach((item, index) => {
+        item.checked = characterEquipmentSelected[index];
+    });
+    equipmentOptions.forEach((item, index) => {
+        console.log(item.value);
+        item.value = characterEquipmentOptions[index];
+    });
+}
+
 export function loadSpells() {
     const spellInputs = document.querySelectorAll(".spell-list");
-    console.log(spellInputs);
     spellInputs.forEach((spell, index) => {
         spell.value = characterSpellsArray[index];
     });
@@ -105,10 +128,18 @@ export function saveCharacter() {
         spellsArray.push(spell.value);
     });
 
-    const equipmentArray = [];
-    const equipment = document.querySelectorAll(".equipment-list");
+    const equipmentSelectedArray = [];
+    const equipment = document.querySelectorAll(".equipment-div input");
+    equipment.forEach(item => {
+        equipmentSelectedArray.push(item.checked);
+    });
 
-    const character = new Character(name, level, spellsArray, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class);
-    console.log(character);
+    const equipmentOptionsArray = [];
+    const equipmentOptions = document.querySelectorAll(".equipment-div select");
+    equipmentOptions.forEach(item => {
+        equipmentOptionsArray.push(item.value);
+    });
+
+    const character = new Character(name, level, spellsArray, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, equipmentSelectedArray, equipmentOptionsArray);
     localStorage.setItem(name, JSON.stringify(character));
 }

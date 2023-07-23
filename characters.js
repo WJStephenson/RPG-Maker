@@ -11,7 +11,9 @@ window.onload = function() {
         const characterClass = character._class;
         const characterRace = character.race;
         const characterContainer = document.createElement("div");
+        const characterP = document.createElement("p");
         characterContainer.classList.add("character");
+        const buttonContainer = document.createElement("div");
         const loadButton = document.createElement("button");
         const deleteButton = document.createElement("button");
         loadButton.innerHTML = "Load";
@@ -24,9 +26,13 @@ window.onload = function() {
             deleteCharacter(character.name);
         });
         
-        characterContainer.innerHTML += `<div class="character-info">${characterName.charAt(0).toUpperCase() + characterName.slice(1)} is a level ${characterLevel} ${characterClass.charAt(0).toUpperCase() + characterClass.slice(1)} ${characterRace.charAt(0).toUpperCase() + characterRace.slice(1)}</div>`;
-        characterContainer.appendChild(loadButton);
-        characterContainer.appendChild(deleteButton);
+        characterP.innerHTML += `<div class="character-info">${characterName.charAt(0).toUpperCase() + characterName.slice(1)} is a level ${characterLevel} ${characterClass.charAt(0).toUpperCase() + characterClass.slice(1)} ${characterRace.charAt(0).toUpperCase() + characterRace.slice(1)}</div>`;
+        
+        
+        buttonContainer.appendChild(deleteButton);
+        buttonContainer.appendChild(loadButton);
+        characterContainer.appendChild(buttonContainer);
+        characterContainer.appendChild(characterP);
         container.appendChild(characterContainer);
     }
 };

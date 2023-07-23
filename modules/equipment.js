@@ -1,18 +1,33 @@
+import { loadEquipment } from "./memory.js";
+
 const equipmentContainer = document.querySelector('.equipment-container');
 const infoIcon = `<i class="fa-solid fa-shield-halved"></i>`;
 export let armorAC = false;
 let baseAC = 10;
 
-export function getEquipmentInfo(classSelect) {
-  fetch(`https://www.dnd5eapi.co/api/classes/${classSelect}/starting-equipment`)
+export async function getEquipmentInfo(classSelect) {
+  try {
+    await getEquipInfo(classSelect);
+    const myUrl = new URL(window.location.toLocaleString());
+    const characterName = myUrl.searchParams.get("characterName");
+    if (characterName !== null) {
+      // All operations in getEquipmentInfo have completed, now call loadEquipment()
+      loadEquipment();
+    }
+  } catch (error) {
+    console.log("Error fetching equipment data:", error);
+  }
+}
+
+export function getEquipInfo(classSelect) {
+  return fetch(`https://www.dnd5eapi.co/api/classes/${classSelect}/starting-equipment`)
     .then(response => response.json())
     .then(data => {
       equipmentContainer.innerHTML = "";
       const optionsArray = recursiveSearch(data.starting_equipment_options);
 
-      optionsArray.forEach((option, index) => {
+      const dropdownPromises = optionsArray.map(async (option, index) => {
         const newForm = document.createElement('form');
-
         newForm.classList.add('equipment-form');
         if (option.indexes[index] === 'simple-weapons' || option.indexes[index] === 'martial-weapons') {
           newForm.innerHTML = `<h3>Choose 1 Weapon</h3>`;
@@ -21,7 +36,7 @@ export function getEquipmentInfo(classSelect) {
         }
         for (let i = 0; i < option.names.length; i++) {
           if (option.indexes[i] === 'simple-weapons' || option.indexes[i] === 'martial-weapons') {
-            createWeaponsDropdown(option.indexes[i], newForm, index);
+            await createWeaponsDropdown(option.indexes[i], newForm, index);
           } else {
             const equipmentDiv = document.createElement('div');
             equipmentDiv.classList.add('equipment-div');
@@ -49,10 +64,17 @@ export function getEquipmentInfo(classSelect) {
           }
         }
         equipmentContainer.appendChild(newForm);
+        return Promise.resolve();
       });
-      loadRadioButtonValues();
+
+      return Promise.all(dropdownPromises);
     })
+    .catch(error => {
+      console.log("Error fetching equipment data:", error);
+    });
 }
+
+
 
 function recursiveSearch(obj) {
   const results = [];
@@ -110,38 +132,43 @@ function recursiveSearch(obj) {
   return results;
 }
 
-function createWeaponsDropdown(weaponType, form, index) {
-  fetch(`https://www.dnd5eapi.co/api/equipment-categories/${weaponType}`)
-    .then(response => response.json())
-    .then(data => {
-      const equipmentDiv = document.createElement('div');
-      equipmentDiv.classList.add('equipment-div');
-      form.appendChild(equipmentDiv);
-      const newInput = document.createElement('input');
-      newInput.setAttribute('type', 'radio');
-      newInput.setAttribute('name', `option-${index}`);
-      newInput.setAttribute('value', data.index);
-      const newSelect = document.createElement('select');
-      data.equipment.forEach(weapon => {
-        const newOption = document.createElement('option');
-        newOption.innerHTML = weapon.name;
-        newOption.value = weapon.index;
-        newSelect.appendChild(newOption);
-      })
-      const newIcon = addIcon(equipmentDiv);
-      equipmentDiv.appendChild(newSelect);
-      newIcon.addEventListener('click', (event) => {
-        const equipmentIndex = event.target.parentNode.nextSibling.value;
-        if (equipmentIndex === 'undefined' || equipmentIndex === '-') return;
-        const popupContainer = document.getElementById('popup-container');
-        const overlay = document.getElementById('popup-overlay');
-        equipmentInfoPopup(equipmentIndex);
-        overlay.style.display = 'block';
-        popupContainer.style.display = 'block';
-        popupContainer.focus();
-      });
-      equipmentDiv.appendChild(newInput);
+async function createWeaponsDropdown(weaponType, form, index) {
+  try {
+    const response = await fetch(`https://www.dnd5eapi.co/api/equipment-categories/${weaponType}`);
+    const data = await response.json();
+
+    const equipmentDiv = document.createElement('div');
+    equipmentDiv.classList.add('equipment-div');
+    form.appendChild(equipmentDiv);
+    const newInput = document.createElement('input');
+    newInput.setAttribute('type', 'radio');
+    newInput.setAttribute('name', `option-${index}`);
+    newInput.setAttribute('value', data.index);
+    const newSelect = document.createElement('select');
+    data.equipment.forEach(weapon => {
+      const newOption = document.createElement('option');
+      newOption.innerHTML = weapon.name;
+      newOption.value = weapon.index;
+      newSelect.appendChild(newOption);
     })
+    const newIcon = addIcon(equipmentDiv);
+    equipmentDiv.appendChild(newSelect);
+    newIcon.addEventListener('click', (event) => {
+      const equipmentIndex = event.target.parentNode.nextSibling.value;
+      if (equipmentIndex === 'undefined' || equipmentIndex === '-') return;
+      const popupContainer = document.getElementById('popup-container');
+      const overlay = document.getElementById('popup-overlay');
+      equipmentInfoPopup(equipmentIndex);
+      overlay.style.display = 'block';
+      popupContainer.style.display = 'block';
+      popupContainer.focus();
+    });
+    equipmentDiv.appendChild(newInput);
+    const event = new Event('optionsLoaded');
+    equipmentDiv.dispatchEvent(event);
+  } catch (error) {
+    console.log("Error fetching equipment data:", error);
+  }
 }
 
 function addIcon(parent) {
@@ -152,7 +179,7 @@ function addIcon(parent) {
   return newIcon;
 }
 
-function equipmentInfoPopup(equipmentIndex) {
+async function equipmentInfoPopup(equipmentIndex) {
   const popupHeading = document.getElementById('popup-heading');
   fetch(`https://www.dnd5eapi.co/api/equipment/${equipmentIndex}`)
     .then(response => response.json())
@@ -212,7 +239,7 @@ function equipmentInfoPopup(equipmentIndex) {
     .catch((error) => {
       console.log(error);
       popupHeading.innerHTML = `Sorry, no info has been found for this item!`;
-    });
+    })
 }
 
 function loadRadioButtonValues() {
@@ -232,6 +259,10 @@ export function calculateAC(selectedEquipment) {
     armorClass.innerHTML = baseAC + 2 + Math.floor((dexterity.value - 10) / 2);
     baseAC = 12;
     return;
+  } else {
+    const armorClass = document.getElementById('armorClass');
+    baseAC = 10;
+    armorClass.innerHTML = baseAC + Math.floor((dexterity.value - 10) / 2);
   }
   fetch(`https://www.dnd5eapi.co/api/equipment/${selectedEquipment}`)
     .then(response => response.json())

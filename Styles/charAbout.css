@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Caveat:wght@500&display=swap');
+
+* {
+    font-family: 'Acme', sans-serif;
+    transition: all 0.2s ease-in-out;
+}
+
+html {
+    line-height: 1.5;
+    margin: 0;
+    background-image: url(/Assets/rpg-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    gap: 3rem;
+}
+
+nav>a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: rgb(211, 211, 211);
+    transition: all 0.2s ease-in-out;
+}
+
+nav>a:hover {
+    color: rgb(136, 136, 136);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 70dvw;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: rgba(211, 211, 211,1);
+}
+
+.saved-characters-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 80vw;
+    max-width: 600px;
+}
+
+.character {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(136, 136, 136, 0.5);
+    border-radius: 1rem;
+}
+
+p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    color: rgb(211, 211, 211);
+}
+
+button {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgba(136, 136, 136, 0.5);
+    color: rgb(211, 211, 211);
+    cursor: pointer;
+    margin: 0.2rem;
+}
+
+button:hover {
+    background-color: rgba(136, 136, 136, 0.8);
+}
+
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 80vw;
+    max-width: 1000px;
+    padding: 1rem;
+    background-color: rgba(136, 136, 136, 0.5);
+    border-radius: 1rem;
+}
