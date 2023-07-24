@@ -50,8 +50,8 @@ export function updateHealth() {
   const constitutionModifier = Math.floor((constitution - 10) / 2);
   let healthTotal = hitDieValue + constitutionModifier;
   for (let i = 1; i < level; i++) {
-      const healthValue = hitDieValue + constitutionModifier;
-      healthTotal += healthValue;
+    const healthValue = hitDieValue + constitutionModifier;
+    healthTotal += healthValue;
   }
   health.value = healthTotal;
 }

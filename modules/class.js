@@ -17,6 +17,6 @@ export function getClassInfo(className) {
                 .then(responseRaw => responseRaw.json())
                 .then(response => {
                     classDescription.innerHTML = response.desc[0];
+                })
         })
-    })
 };
