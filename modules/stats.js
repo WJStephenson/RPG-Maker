@@ -3,6 +3,7 @@ import { updateSkillValues } from "./skills.js";
 
 const inputElements = document.querySelectorAll(".stat input");
 
+// Function to generate random stats and roll dice
 export function generateRandomStats() {
   const statValues = [];
   inputElements.forEach((input) => {
@@ -20,6 +21,7 @@ export function generateRandomStats() {
   updateModifierValues();
 };
 
+// Function to update modifier values based on random dice rolls
 export function updateModifierValues() {
   const modifierElements = document.querySelectorAll(".stat p");
   modifierElements.forEach((modifierElement) => {
@@ -33,11 +35,12 @@ export function updateModifierValues() {
   updateSkillValues(modifierElements[0].innerHTML, modifierElements[1].innerHTML, modifierElements[3].innerHTML, modifierElements[4].innerHTML, modifierElements[5].innerHTML);
 }
 
-
+// Function to calculate and return modifier values
 function calculateModifier(statValue) {
   return Math.floor((statValue - 10) / 2);
 }
 
+// Function to update health value based on user level, hit die and constitution
 export function updateHealth() {
   const level = document.getElementById("level").value;
   const hitDie = document.getElementById("hit-die");
@@ -53,6 +56,7 @@ export function updateHealth() {
   health.value = healthTotal;
 }
 
+// Function to update Proficiency Bonus based on user level
 export function updateProficiency() {
   const level = document.getElementById("level").value;
   const proficiency = document.getElementById("proficiency");

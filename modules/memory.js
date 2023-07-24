@@ -9,6 +9,7 @@ let characterSpellsArray = [];
 let characterEquipmentSelected = [];
 let characterEquipmentOptions = [];
 
+// Character class constructor
 class Character {
     constructor(name, level, spells, strength, dexterity, constitution, intelligence, wisdom, charisma, race, _class, equipSelection, equipOptions) {
         this.name = name;
@@ -27,6 +28,7 @@ class Character {
     }
 }
 
+// Function to get URL parameters and call load character function
 export function getUrlParameters() {
     const myUrl = new URL(window.location.toLocaleString());
     const characterName = myUrl.searchParams.get("characterName");
@@ -35,6 +37,7 @@ export function getUrlParameters() {
     }
 }
 
+// Function to load character from local storage
 async function loadCharacter(characterName) {
     const character = JSON.parse(localStorage.getItem(characterName));
     console.log(character);
@@ -78,6 +81,7 @@ async function loadCharacter(characterName) {
     updateSpells(level.value, _class.value);
 }
 
+// Function to load equipment from local storage
 export function loadEquipment() {
     const equipmentSelected = document.querySelectorAll("input[type='radio']");
     const equipmentOptions = document.querySelectorAll(".equipment-div select");
@@ -94,6 +98,7 @@ export function loadEquipment() {
     });
 }
 
+// Function to load spells from local storage
 export function loadSpells() {
     const spellInputs = document.querySelectorAll(".spell-list");
     spellInputs.forEach((spell, index) => {
@@ -101,6 +106,7 @@ export function loadSpells() {
     });
 }
 
+// Function to save character to local storage
 export function saveCharacter() {
     const name = document.getElementById("character-name").value;
     if (name === "") {

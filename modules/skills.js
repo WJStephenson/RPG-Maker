@@ -5,7 +5,7 @@ const wisdomSkills = ['animal-handling', 'insight', 'medicine', 'perception', 's
 const charismaSkills = ['deception', 'intimidation', 'performance', 'persuasion'];
 
 
-
+// calls the updateSkill function for each ability score
 export function updateSkillValues(strength, dexterity, intelligence, wisdom, charisma) {
     for (let skill of strengthSkills) {
         updateSkill(skill, strength);
@@ -25,11 +25,13 @@ export function updateSkillValues(strength, dexterity, intelligence, wisdom, cha
     setinitiative(dexterity);
 }
 
+// updates the skill value based on the ability score
 function updateSkill(skill, value) {
     const skillElement = document.querySelector(`#${skill}-total`);
     skillElement.innerHTML = value;
 }
 
+// sets the initiative value based on the dexterity score
 function setinitiative(value) {
     const initiative = document.getElementById("initiative");
     initiative.innerHTML = value;

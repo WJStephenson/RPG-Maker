@@ -1,3 +1,6 @@
+// Description: This file contains the main functions that are called when the user interacts with the page. It also contains the event listeners for the DOM elements.
+
+// Import modules
 import { rollDice, clearRolls } from "./modules/dice.js";
 import { generateRandomStats, updateModifierValues, updateHealth, updateProficiency } from "./modules/stats.js";
 import { getRaceInfo } from "./modules/race.js";
@@ -7,6 +10,7 @@ import { updateSpells } from "./modules/spells.js";
 import { getEquipmentInfo, updateAC } from "./modules/equipment.js";
 import { getUrlParameters, saveCharacter } from "./modules/memory.js";
 
+// DOM elements
 const rollButton = document.getElementById('roll-dice');
 const clearButton = document.getElementById('clear-rolls');
 export const raceSelect = document.getElementById('race-selection');
@@ -19,7 +23,7 @@ const saveButton = document.getElementById("save-button");
 const statInputs = document.querySelectorAll(".stat input");
 
 
-
+// Event listeners
 statInputs.forEach((input) => {
   input.addEventListener('change', () => {
     updateModifierValues();
@@ -75,6 +79,7 @@ saveButton.addEventListener("click", () => {
   saveMessage.innerHTML = "Character saved!";
 });
 
+// On page load
 window.onload = function () {
   getUrlParameters();
 }

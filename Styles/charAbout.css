@@ -8,10 +8,10 @@
 html {
     line-height: 1.5;
     margin: 0;
-    background-image: url(/Assets/rpg-bg.png);
+    background-image: url(/Assets/rpg-bg.png), url(/Assets/rpg-bg-lowQ.png);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: top;
 }
 
 nav {
@@ -42,6 +42,7 @@ main {
     width: 70dvw;
     max-width: 1440px;
     margin: 0 auto;
+    min-height: 100vh;
 }
 
 h1 {

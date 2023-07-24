@@ -2,6 +2,7 @@ import { updateHealth } from "./stats.js";
 
 const classDescription = document.getElementById(`class-description`);
 
+// Get class info from API
 export function getClassInfo(className) {
     fetch(`https://www.dnd5eapi.co/api/classes/${className}`)
         .then(response => response.json())

@@ -1,6 +1,7 @@
 const diceResultContainer = document.getElementById("dice-result");
 const clearButton = document.getElementById("clear-rolls");
 
+//   function to generate random dice rolls
 export function rollDice(forStats = false) {
   let diceQuantity = document.getElementById("dice-quantity").value;
   let diceType = document.getElementById("dice-select").value;
@@ -49,6 +50,7 @@ export function rollDice(forStats = false) {
   return statRolls;
 }
 
+//   function to clear dice rolls
 export function clearRolls() {
   console.log("clearing rolls");
   while (diceResultContainer.firstChild) {
@@ -59,6 +61,7 @@ export function clearRolls() {
 
 let currentColor = 0;
 
+//   function to select color for dice rolls to differentiate between rolls
 function colorSelector() {
   switch (currentColor) {
     case 0:

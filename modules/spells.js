@@ -5,6 +5,7 @@ import { loadSpells } from "./memory.js";
 const infoIcon = `<i class="fa-solid fa-wand-sparkles"></i>`;
 const spellsContainer = document.querySelector(".spell-container");
 
+// Function to get spell info from API based on user selected class and level
 export async function updateSpells(level, className) {
     clearOptions();
     fetch(`https://www.dnd5eapi.co/api/classes/${className}/levels/${level}`)
@@ -15,6 +16,7 @@ export async function updateSpells(level, className) {
         .catch((error) => { console.log(error); });
 };
 
+// Function to create spell list based on data returned from API
 async function createSpellList(className, spellLevelArr) {
     if (spellLevelArr.length === 0) {
         spellsContainer.style.display = "none";
@@ -72,6 +74,7 @@ async function createSpellList(className, spellLevelArr) {
     }
 }
 
+// Function to create spell options
 function createOption(spellName, parentDiv, spellIndex) {
     const option = document.createElement("option");
     option.classList.add("spell-option");
@@ -80,11 +83,13 @@ function createOption(spellName, parentDiv, spellIndex) {
     parentDiv.appendChild(option);
 }
 
+// Function to clear spell options
 function clearOptions() {
     const spellContainer = document.getElementById("spell-container");
     spellContainer.innerHTML = "";
 };
 
+// Function to get spell slot details from API data that has been returned
 function getSpellSlotDetail(data) {
     const slotArray = [];
     if ("spellcasting" in data === false) {
@@ -121,6 +126,7 @@ function getSpellSlotDetail(data) {
     return slotArray;
 }
 
+// Function to get spell names from API based on user selected class
 async function getSpellNames(index, className) {
     try {
         const response = await fetch(`https://www.dnd5eapi.co/api/classes/${className}/levels/${index}/spells`);
@@ -132,6 +138,7 @@ async function getSpellNames(index, className) {
     }
 }
 
+// Function to get spell info from API based on user selected spell and call createSpellPopup function
 export function spellInfoPopup(spell) {
     if (spell === "-") return;
     fetch(`https://www.dnd5eapi.co/api/spells/${spell}`)
@@ -141,6 +148,7 @@ export function spellInfoPopup(spell) {
         })
 }
 
+// Function to create spell popup based on data returned from API
 function createSpellPopup(data) {
     const popupHeading = document.getElementById("popup-heading");
     const popupDescription = document.getElementById("popup-desc");

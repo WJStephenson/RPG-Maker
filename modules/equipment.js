@@ -5,6 +5,7 @@ const infoIcon = `<i class="fa-solid fa-shield-halved"></i>`;
 export let armorAC = false;
 let baseAC = 10;
 
+// Get equipment info from API based on class
 export async function getEquipmentInfo(classSelect) {
   try {
     await getEquipInfo(classSelect);
@@ -19,6 +20,7 @@ export async function getEquipmentInfo(classSelect) {
   }
 }
 
+// Get strating equipment info from API based on class
 export function getEquipInfo(classSelect) {
   return fetch(`https://www.dnd5eapi.co/api/classes/${classSelect}/starting-equipment`)
     .then(response => response.json())
@@ -74,8 +76,7 @@ export function getEquipInfo(classSelect) {
     });
 }
 
-
-
+// Recursive search function to find all names and indexes in the starting equipment options
 function recursiveSearch(obj) {
   const results = [];
 
@@ -132,6 +133,7 @@ function recursiveSearch(obj) {
   return results;
 }
 
+// Create dropdowns for weapons
 async function createWeaponsDropdown(weaponType, form, index) {
   try {
     const response = await fetch(`https://www.dnd5eapi.co/api/equipment-categories/${weaponType}`);
@@ -171,6 +173,7 @@ async function createWeaponsDropdown(weaponType, form, index) {
   }
 }
 
+// Add info icon to equipment divs
 function addIcon(parent) {
   const newIcon = document.createElement('span');
   newIcon.className = 'info-icon';
@@ -179,6 +182,7 @@ function addIcon(parent) {
   return newIcon;
 }
 
+// Get equipment info from API based on equipment index
 async function equipmentInfoPopup(equipmentIndex) {
   const popupHeading = document.getElementById('popup-heading');
   fetch(`https://www.dnd5eapi.co/api/equipment/${equipmentIndex}`)
@@ -242,17 +246,7 @@ async function equipmentInfoPopup(equipmentIndex) {
     })
 }
 
-function loadRadioButtonValues() {
-  const radioButtons = document.querySelectorAll('input[type="radio"]');
-  radioButtons.forEach(button => {
-    button.addEventListener('change', function () {
-      if (this.checked) {
-        calculateAC(this.value);
-      }
-    });
-  });
-}
-
+// Calculates AC based on equipment selected
 export function calculateAC(selectedEquipment) {
   if (selectedEquipment == 'shield') {
     const armorClass = document.getElementById('armorClass');
@@ -288,6 +282,7 @@ export function calculateAC(selectedEquipment) {
     });
 }
 
+// Update AC based on dexterity modifier
 export function updateAC() {
   const armorClass = document.getElementById('armorClass');
   if (armorAC) {

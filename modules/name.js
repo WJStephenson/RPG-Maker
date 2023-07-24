@@ -1,5 +1,6 @@
 const name = document.getElementById("character-name");
 
+// Function to generate random names from API
 export function generateRandomName() {
     fetch(`https://chartopia.d12dev.com/api/charts/19/roll/`, {
         method: 'POST',

@@ -1,22 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Acme&family=Caveat:wght@500&display=swap');
 
-:root {
-    --background-color: #fff;
-}
-
+/* Global styles */
 * {
     font-family: 'Acme', sans-serif;
     transition: all 0.2s ease-in-out;
+    margin: 0;
+    padding: 0;
 }
 
 html {
     line-height: 1.5;
-    margin: 0;
-    background-image: url(/Assets/rpg-bg.png);
+    background-image: url(/Assets/rpg-bg.png), url(/Assets/rpg-bg-lowQ.png);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: top;
 }
+
+/* Navigation bar styles */
+
 nav {
     display: flex;
     justify-content: center;
@@ -37,6 +38,8 @@ nav>a:hover {
     color: rgb(136, 136, 136);
 }
 
+/* Main styles */
+
 main {
     position: relative;
     display: grid;
@@ -46,15 +49,14 @@ main {
         "class class class"
         "race race race"
         "stats stats stats"
-        "skills equipment equipment"
-        "skills equipment equipment"
-        "spell spell spell"
-        "save save save";
+        "skills spell spell"
+        "skills spell spell"
+        "equipment equipment equipment"
+        "save . .";
     gap: 1rem;
     width: 70dvw;
     max-width: 1440px;
-    margin: 0 auto;
-    /* overflow-x: hidden; */
+    margin: auto;
 }
 
 label,
@@ -92,7 +94,6 @@ section {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    margin: 1rem;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 2rem;
 }
@@ -111,6 +112,12 @@ i {
     cursor: pointer;
 }
 
+i:hover {
+    scale: 1.1;
+}
+
+/* Character Section styles */
+
 .character-container {
     grid-area: character;
     display: flex;
@@ -119,13 +126,46 @@ i {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    margin: 1rem;
 }
 
 .sub-character-info {
-    display: flex;
+    display: grid;
+    grid-template-areas: "name level health";
     justify-content: center;
     align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.sub-name {
+    grid-area: name;
+    display: flex;
+    align-items: center;
+}
+
+.sub-health {
+    grid-area: health;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sub-level {
+    grid-area: level;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sub-character-stats {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
     gap: 2rem;
     padding: 1rem;
     margin: 1rem;
@@ -136,19 +176,27 @@ i {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 80px;
 }
 
-.sub-character-container p, .sub-character-container label {
-    margin: 0;
-    padding: 0;
+.sub-character-container p,
+.sub-character-container label {
     font-size: 1.5rem;
 }
 
-.character-container input[type=number]::-webkit-inner-spin-button, .character-container input[type="number"]::-webkit-outer-spin-button {
+.character-container input[type=number]::-webkit-inner-spin-button,
+.character-container input[type="number"]::-webkit-outer-spin-button {
     appearance: none;
-    margin: 0;
     display: none;
 }
+
+#health,
+#level {
+    width: 50px;
+    text-align: center;
+}
+
+/* Stat Section styles */
 
 .stat-container {
     grid-area: stats;
@@ -156,13 +204,14 @@ i {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    padding: 1rem;
-    margin: 1rem;
+    padding: 0.5rem;
 }
 
 .stat-card {
-    display: flex;
-    justify-content: space-evenly;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    row-gap: 5rem;
     align-items: center;
 }
 
@@ -171,9 +220,15 @@ i {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    margin: 0 2rem;
+    gap: 0.5rem;
 }
+
+.stat input {
+    width: 50px;
+    text-align: center;
+}
+
+/* Dice Section styles */
 
 .dice-roller-container {
     background-color: transparent;
@@ -182,19 +237,19 @@ i {
 .side-menu {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-}
-
-.side-menu {
+    gap: 5px;
     position: fixed;
-    top: 30px;
-    right: -29%;
-    width: 300px;
-    height: calc(100vh - 80px);
+    top: 50px;
+    right: -350px;
+    width: 250px;
+    height: 80vh;
     transition: all 0.5s ease;
     background-color: rgb(136, 136, 136);
     border-radius: 1rem;
+    margin: 5px;
+    padding: 5px;
 }
 
 main>input[type=checkbox] {
@@ -237,14 +292,14 @@ main>.menu-toggle {
 #dice-result p {
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 0;
 }
 
 #dice-result span {
     font-size: 1rem;
     font-weight: bold;
-    margin: 0;
 }
+
+/* Race Container styles */
 
 .race-container {
     grid-area: race;
@@ -254,8 +309,9 @@ main>.menu-toggle {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    margin: 1rem;
 }
+
+/* Class Container styles */
 
 .class-container {
     grid-area: class;
@@ -265,16 +321,21 @@ main>.menu-toggle {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    margin: 1rem;
 }
+
+/* Spell Container styles */
 
 .spell-container {
     grid-area: spell;
-    display: none;
-    grid-template-columns: repeat(4, 1fr);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+
+.spell-container>h1 {
+    text-align: center;
 }
 
 .spell-list-container {
@@ -286,6 +347,11 @@ main>.menu-toggle {
     padding: 1rem;
     border: 2px solid #333;
     min-height: 200px;
+    margin: 0.5rem;
+}
+
+.spell-list {
+    width: 50%;
 }
 
 .icon-select-container {
@@ -293,12 +359,15 @@ main>.menu-toggle {
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    width: 90%;
 }
 
 .icon-select-container label {
     font-size: 1rem;
     font-weight: bold;
 }
+
+/* Skill Container Styles */
 
 .skills-container {
     grid-area: skills;
@@ -308,7 +377,6 @@ main>.menu-toggle {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    margin: 1rem;
 }
 
 .skill {
@@ -328,10 +396,16 @@ main>.menu-toggle {
     font-size: 1rem;
 }
 
+/* Equipment Container Styles */
+
 .equipment-container {
     grid-area: equipment;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+}
+
+.equipment-container>h1 {
+    text-align: center;
 }
 
 .equipment-container form {
@@ -340,7 +414,7 @@ main>.menu-toggle {
     justify-content: space-evenly;
     align-items: center;
     padding: 1rem;
-    margin: 1rem;
+    margin: 0.5rem;
     border: 2px solid #333;
     height: 200px;
 }
@@ -357,13 +431,14 @@ main>.menu-toggle {
     font-size: 1rem;
 }
 
+/* Popup and Overlay Section styles */
+
 .popup-container {
     display: none;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
-    margin: 1rem;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -383,9 +458,93 @@ main>.menu-toggle {
     height: 100vh;
     backdrop-filter: blur(5px);
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    z-index: 5000;
 }
 
-.saved-characters-container {
+/* Save Container styles */
+
+.save-container {
     grid-area: save;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 1440px) {
+    main {
+        width: 85dvw;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .equipment-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    main {
+        width: 90dvw;
+        grid-template-areas:
+            "character character character"
+            "class class class"
+            "race race race"
+            "skills skills stats"
+            "spell spell spell"
+            "equipment equipment equipment"
+            "save save save";
+    }
+
+    .stat-card {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 740px) {
+    .spell-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sub-character-info {
+        grid-template-areas: "name name"
+            "level health";
+    }
+
+    p, label {
+        font-size: 1rem !important;
+    }
+
+    nav {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 0;
+    }
+}
+
+@media screen and (max-width: 610px) {
+    main {
+        width: 90dvw;
+        grid-template-areas:
+            "character character character"
+            "class class class"
+            "race race race"
+            "stats stats stats"
+            "skills skills skills"
+            "spell spell spell"
+            "equipment equipment equipment"
+            "save save save";
+    }
+
+    .sub-name {
+        flex-direction: column;
+    }
+
+    .stat-card {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 1rem;
+    }
+
+    .equipment-container {
+        grid-template-columns: 1fr;
+    }
 }
